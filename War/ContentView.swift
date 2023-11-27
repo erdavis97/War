@@ -16,9 +16,15 @@ struct ContentView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
             Spacer()
+            NavigationView {
+                Button("Start Game") {
+                    
+                }
+                .background(Rectangle().frame(width: 130.0, height: 40.0) .foregroundColor(.yellow).border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: 2.5))
+                .background(Rectangle().frame(width: 394.0, height: 2000.0) .foregroundColor(.mint))
+            }
         }
         .background(Rectangle().frame(width: 394.0, height: 2000.0) .foregroundColor(.mint))
-        .findDisabled()
     }
 }
 
@@ -34,3 +40,6 @@ struct CustomText: View {
         Text(text).font(Font.custom("", size: 120))
     }
 }
+
+
+

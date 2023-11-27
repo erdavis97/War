@@ -11,6 +11,7 @@
 		4ACE265E2B0D046800F461DA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACE265D2B0D046800F461DA /* ContentView.swift */; };
 		4ACE26602B0D046A00F461DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4ACE265F2B0D046A00F461DA /* Assets.xcassets */; };
 		4ACE26632B0D046A00F461DA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4ACE26622B0D046A00F461DA /* Preview Assets.xcassets */; };
+		4ACE266A2B14EC8E00F461DA /* SinglePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACE26692B14EC8E00F461DA /* SinglePlayerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		4ACE265D2B0D046800F461DA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4ACE265F2B0D046A00F461DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4ACE26622B0D046A00F461DA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4ACE26692B14EC8E00F461DA /* SinglePlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePlayerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			children = (
 				4ACE265B2B0D046800F461DA /* WarApp.swift */,
 				4ACE265D2B0D046800F461DA /* ContentView.swift */,
+				4ACE26692B14EC8E00F461DA /* SinglePlayerView.swift */,
 				4ACE265F2B0D046A00F461DA /* Assets.xcassets */,
 				4ACE26612B0D046A00F461DA /* Preview Content */,
 			);
@@ -138,6 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4ACE265E2B0D046800F461DA /* ContentView.swift in Sources */,
+				4ACE266A2B14EC8E00F461DA /* SinglePlayerView.swift in Sources */,
 				4ACE265C2B0D046800F461DA /* WarApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
