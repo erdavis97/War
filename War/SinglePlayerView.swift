@@ -9,14 +9,24 @@ import SwiftUI
 
 struct SinglePlayerView: View {
     @State private var remainingCards = ""
-    
+    @State private var flipped = false
     var body: some View {
         VStack {
-            Image("gray_back")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 100.0, height: 180.0)
-                .offset(x: 0.0, y: -170.0)
+            ZStack {
+                Image("gray_back")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 100.0, height: 180.0)
+                    .offset(x: 0.0, y: -170.0)
+                if flipped {
+                    Image("KC")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 100.0, height: 180.0)
+                        .offset(x: 0.0, y: -170.0)
+                }
+            }
+            //add button to flip, add animation
             HStack {
                 Text("CPU: \(remainingCards)")
                     .font(.title2)
