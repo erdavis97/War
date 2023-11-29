@@ -8,26 +8,33 @@
 import SwiftUI
 
 struct SinglePlayerView: View {
+    @State private var remainingCards = ""
+    
     var body: some View {
         VStack {
             Image("gray_back")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 100.0, height: 180.0)
-                .offset(x: 0.0, y: -130.0)
-            Group {
-                Text("CPU has (filler) cards remaining")
-                    .padding()
-                Text("Player 1 has (filler) cards remaining")
+                .offset(x: 0.0, y: -170.0)
+            HStack {
+                Text("CPU: \(remainingCards)")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.leading)
+                    .offset(x: -90.0, y: 0.0)
+                Text("Player 1: \(remainingCards)")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .offset(x: 90.0, y: 0.0)
             }
             Image("blue_back")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 100.0, height: 180.0)
-                .offset(x: 0.0, y: 150.0)
+                .offset(x: 0.0, y: 190.0)
         }
     }
-        //set image to top of screen, text to center
 }
 
 struct SinglePlayerView_Previews: PreviewProvider {
