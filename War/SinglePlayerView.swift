@@ -13,13 +13,18 @@ struct SinglePlayerView: View {
             Image("gray_back")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 115.0, height: 180.0)
-                .padding()
+                .frame(width: 100.0, height: 180.0)
+                .offset(x: 0.0, y: -130.0)
             Group {
-                Text("CPU has (filler) cards remaining ")
+                Text("CPU has (filler) cards remaining")
                     .padding()
-                Text("Player 1 has (filler) cards remaining ")
+                Text("Player 1 has (filler) cards remaining")
             }
+            Image("blue_back")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 100.0, height: 180.0)
+                .offset(x: 0.0, y: 150.0)
         }
     }
         //set image to top of screen, text to center
