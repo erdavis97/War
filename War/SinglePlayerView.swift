@@ -18,20 +18,14 @@ struct SinglePlayerView: View {
                 .frame(width: 300.0, height: 1000)
             VStack {
                 ZStack {
-                    Image("gray_back")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 100.0, height: 180.0)
+                    CardImage(name: "gray_back")
                         .offset(x: 0.0, y: -170.0)
                     if flipped {
-                        Image("KC")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 100.0, height: 180.0)
+                        CardImage(name: "KC")
                             .offset(x: 0.0, y: -170.0)
                     }
                 }
-                //add button to flip, add animation
+                //add animation
                 HStack {
                     VStack {
                         CustomText1(text: "CPU: \(points)")
@@ -43,11 +37,14 @@ struct SinglePlayerView: View {
                         flipped.toggle()
                     }
                 }
-                Image("blue_back")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 100.0, height: 180.0)
-                    .offset(x: 0.0, y: 190.0)
+                ZStack {
+                    CardImage(name: "blue_back")
+                        .offset(x: 0.0, y: 190.0)
+                    if flipped {
+                        CardImage(name: "QC")
+                            .offset(x: 0.0, y: 190.0)
+                    }
+                }
             }
         }
     }
@@ -64,3 +61,14 @@ struct CustomText1: View {
         Text(text).font(Font.custom("", size: 22)).fontWeight(.bold).foregroundColor(Color.white)
     }
 }
+struct CardImage: View {
+    let name: String
+    var body: some View {
+        Image(name)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 100.0, height: 180.0)
+    }
+}
+//add custom button
+//start work on card images system (card value) (suit number)
