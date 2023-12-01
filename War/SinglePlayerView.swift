@@ -10,6 +10,8 @@ import SwiftUI
 struct SinglePlayerView: View {
     @State private var points = ""
     @State private var flipped = false
+    @State private var cardValue = 0
+    @State private var suitValue = 0
     var body: some View {
         ZStack {
             Image("Green Background")
@@ -21,7 +23,7 @@ struct SinglePlayerView: View {
                     CardImage(name: "gray_back")
                         .offset(x: 0.0, y: -170.0)
                     if flipped {
-                        CardImage(name: "KC")
+                        CardImage(name: "\(cardValue) \(suitValue)")
                             .offset(x: 0.0, y: -170.0)
                     }
                 }
@@ -41,7 +43,7 @@ struct SinglePlayerView: View {
                     CardImage(name: "blue_back")
                         .offset(x: 0.0, y: 190.0)
                     if flipped {
-                        CardImage(name: "QC")
+                        CardImage(name: "\(cardValue) \(suitValue)")
                             .offset(x: 0.0, y: 190.0)
                     }
                 }
