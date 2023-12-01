@@ -32,11 +32,16 @@ struct SinglePlayerView: View {
                     }
                 }
                 //add button to flip, add animation
-                VStack {
-                    CustomText1(text: "CPU: \(points)")
-                        .offset(x: -145.0, y: 0.0)
-                    CustomText1(text: "Player 1: \(points)")
-                        .offset(x: -128.0, y: 0.0)
+                HStack {
+                    VStack {
+                        CustomText1(text: "CPU: \(points)")
+                            .offset(x: -145.0, y: 0.0)
+                        CustomText1(text: "Player 1: \(points)")
+                            .offset(x: -128.0, y: 0.0)
+                    }
+                    Button("Flip") {
+                        flipped.toggle()
+                    }
                 }
                 Image("blue_back")
                     .resizable()
@@ -56,6 +61,6 @@ struct SinglePlayerView_Previews: PreviewProvider {
 struct CustomText1: View {
     let text: String
     var body: some View {
-        Text(text).font(Font.custom("", size: 36)).fontWeight(.bold).foregroundColor(Color.white)
+        Text(text).font(Font.custom("", size: 22)).fontWeight(.bold).foregroundColor(Color.white)
     }
 }
