@@ -37,6 +37,8 @@ struct SinglePlayerView: View {
                     }
                     Button("Flip") {
                         flipped.toggle()
+                        chooseRandom(times: 1)
+                        //set values to random ones between 1...14 and 1...4
                     }
                 }
                 ZStack {
@@ -50,6 +52,16 @@ struct SinglePlayerView: View {
             }
         }
     }
+    
+    func chooseRandom(times:Int) {
+        if times > 0 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                cardValue = Int.random(in: 1...14)
+                suitValue = Int.random(in: 1...4)
+                chooseRandom(times: times - 1)
+            }
+        }
+    }
 }
 
 struct SinglePlayerView_Previews: PreviewProvider {
@@ -57,12 +69,14 @@ struct SinglePlayerView_Previews: PreviewProvider {
         SinglePlayerView()
     }
 }
+
 struct CustomText1: View {
     let text: String
     var body: some View {
         Text(text).font(Font.custom("", size: 22)).fontWeight(.bold).foregroundColor(Color.white)
     }
 }
+
 struct CardImage: View {
     let name: String
     var body: some View {
@@ -72,5 +86,6 @@ struct CardImage: View {
             .frame(width: 100.0, height: 180.0)
     }
 }
+
 //add custom button
-//start work on card images system (card value) (suit number)
+
