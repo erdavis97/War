@@ -39,7 +39,10 @@ struct SinglePlayerView: View {
                     }
                     Button("Flip") {
                         flipped.toggle()
-                        chooseRandom(times: 1)
+                        cardValueCPU = Int.random(in: 2...14)
+                        cardValuePlayer = Int.random(in: 2...14)
+                        suitValueCPU = Int.random(in: 1...4)
+                        suitValuePlayer = Int.random(in: 1...4)
                     }
                 }
                 ZStack {
@@ -50,18 +53,6 @@ struct SinglePlayerView: View {
                             .offset(x: 0.0, y: 190.0)
                     }
                 }
-            }
-        }
-    }
-    // figure out how to make CPU and player have different cards, cards do not flip multiple times if clicked multiple times
-    func chooseRandom(times:Int) {
-        if times > 0 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                cardValuePlayer = Int.random(in: 1...14)
-                cardValueCPU = Int.random(in: 1...14)
-                suitValuePlayer = Int.random(in: 1...4)
-                suitValueCPU = Int.random(in: 1...4)
-                chooseRandom(times: times - 1)
             }
         }
     }
@@ -90,5 +81,5 @@ struct CardImage: View {
     }
 }
 
-//add custom button
+//add custom button func
 
