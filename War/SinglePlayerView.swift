@@ -10,8 +10,10 @@ import SwiftUI
 struct SinglePlayerView: View {
     @State private var points = ""
     @State private var flipped = false
-    @State private var cardValue = 0
-    @State private var suitValue = 0
+    @State private var cardValuePlayer = 0
+    @State private var cardValueCPU = 0
+    @State private var suitValuePlayer = 0
+    @State private var suitValueCPU = 0
     var body: some View {
         ZStack {
             Image("Green Background")
@@ -23,7 +25,7 @@ struct SinglePlayerView: View {
                     CardImage(name: "gray_back")
                         .offset(x: 0.0, y: -170.0)
                     if flipped {
-                        CardImage(name: "\(cardValue) \(suitValue)")
+                        CardImage(name: "\(cardValueCPU) \(suitValueCPU)")
                             .offset(x: 0.0, y: -170.0)
                     }
                 }
@@ -38,26 +40,27 @@ struct SinglePlayerView: View {
                     Button("Flip") {
                         flipped.toggle()
                         chooseRandom(times: 1)
-                        //set values to random ones between 1...14 and 1...4
                     }
                 }
                 ZStack {
                     CardImage(name: "blue_back")
                         .offset(x: 0.0, y: 190.0)
                     if flipped {
-                        CardImage(name: "\(cardValue) \(suitValue)")
+                        CardImage(name: "\(cardValuePlayer) \(suitValuePlayer)")
                             .offset(x: 0.0, y: 190.0)
                     }
                 }
             }
         }
     }
-    
+    // figure out how to make CPU and player have different cards, cards do not flip multiple times if clicked multiple times
     func chooseRandom(times:Int) {
         if times > 0 {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                cardValue = Int.random(in: 1...14)
-                suitValue = Int.random(in: 1...4)
+                cardValuePlayer = Int.random(in: 1...14)
+                cardValueCPU = Int.random(in: 1...14)
+                suitValuePlayer = Int.random(in: 1...4)
+                suitValueCPU = Int.random(in: 1...4)
                 chooseRandom(times: times - 1)
             }
         }
