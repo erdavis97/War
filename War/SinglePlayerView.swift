@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct SinglePlayerView: View {
-    @State private var points = ""
     @State private var flipped = false
+    @State private var pointsPlayer = 0
+    @State private var pointsCPU = 0
     @State private var cardValuePlayer = 0
     @State private var cardValueCPU = 0
     @State private var suitValuePlayer = 0
@@ -32,9 +33,9 @@ struct SinglePlayerView: View {
                 //add animation
                 HStack {
                     VStack {
-                        CustomText1(text: "CPU: \(points)")
+                        CustomText1(text: "CPU: \(pointsCPU)")
                             .offset(x: -145.0, y: 0.0)
-                        CustomText1(text: "Player 1: \(points)")
+                        CustomText1(text: "Player 1: \(pointsPlayer)")
                             .offset(x: -128.0, y: 0.0)
                     }
                     Button("Flip") {
@@ -43,6 +44,7 @@ struct SinglePlayerView: View {
                         cardValuePlayer = Int.random(in: 2...14)
                         suitValueCPU = Int.random(in: 1...4)
                         suitValuePlayer = Int.random(in: 1...4)
+                        playGame()
                     }
                 }
                 ZStack {
@@ -56,6 +58,28 @@ struct SinglePlayerView: View {
             }
         }
     }
+    
+    func turnWinner() {
+        if cardValueCPU > cardValuePlayer {
+            pointsCPU += cardValueCPU
+        }
+        else if cardValuePlayer > cardValueCPU {
+            pointsPlayer += cardValuePlayer
+        }
+    }
+    
+    func playGame() {
+        if flipped == false {
+            cardValuePlayer = 0
+            cardValueCPU = 0
+            suitValuePlayer = 0
+            suitValueCPU = 0
+        }
+        else {
+            turnWinner()
+        }
+    }
+    
 }
 
 struct SinglePlayerView_Previews: PreviewProvider {
