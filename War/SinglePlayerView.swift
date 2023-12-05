@@ -30,13 +30,12 @@ struct SinglePlayerView: View {
                             .offset(x: 0.0, y: -170.0)
                     }
                 }
-                //add animation
                 HStack {
                     VStack {
                         CustomText1(text: "CPU: \(pointsCPU)")
-                            .offset(x: -145.0, y: 0.0)
+                            .offset(x: -100.0, y: 0.0)
                         CustomText1(text: "Player 1: \(pointsPlayer)")
-                            .offset(x: -128.0, y: 0.0)
+                            .offset(x: -82.0, y: 0.0)
                     }
                     Button("Flip") {
                         flipped.toggle()
@@ -44,8 +43,10 @@ struct SinglePlayerView: View {
                         cardValuePlayer = Int.random(in: 2...14)
                         suitValueCPU = Int.random(in: 1...4)
                         suitValuePlayer = Int.random(in: 1...4)
-                        playGame()
+                        playTurn()
                     }
+                    .buttonStyle(CustomButtonStyle())
+                    .offset(x: -60.0, y: 0.0)
                 }
                 ZStack {
                     CardImage(name: "blue_back")
@@ -58,7 +59,7 @@ struct SinglePlayerView: View {
             }
         }
     }
-    
+    // add gameplay for ties, add card flip animation, add ending
     func turnWinner() {
         if cardValueCPU > cardValuePlayer {
             pointsCPU += cardValueCPU
@@ -68,7 +69,7 @@ struct SinglePlayerView: View {
         }
     }
     
-    func playGame() {
+    func playTurn() {
         if flipped == false {
             cardValuePlayer = 0
             cardValueCPU = 0
@@ -79,7 +80,6 @@ struct SinglePlayerView: View {
             turnWinner()
         }
     }
-    
 }
 
 struct SinglePlayerView_Previews: PreviewProvider {
@@ -105,5 +105,14 @@ struct CardImage: View {
     }
 }
 
-//add custom button func
+struct CustomButtonStyle: ButtonStyle {
+    func makeBody (configuration: Configuration) -> some View {
+        configuration.label
+            .frame(width: 60).font(Font.custom("", size: 24))
+            .padding().background(.red).opacity(configuration.isPressed ? 0.0: 1.0)
+            .foregroundColor(.white)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+    }
+}
+
 
