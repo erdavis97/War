@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SinglePlayerView: View {
     @State private var flipped = false
+    @State private var tie = false
     @State private var pointsPlayer = 0
     @State private var pointsCPU = 0
     @State private var cardValuePlayer = 0
@@ -28,6 +29,13 @@ struct SinglePlayerView: View {
                     if flipped {
                         CardImage(name: "\(cardValueCPU) \(suitValueCPU)")
                             .offset(x: 0.0, y: -170.0)
+                        if tie {
+                            HStack {
+                                CardImage(name: "gray_back")
+                                CardImage(name: "\(cardValueCPU) \(suitValueCPU)")
+                                CardImage(name: "gray_back")
+                            }
+                        }
                     }
                 }
                 HStack {
@@ -45,6 +53,7 @@ struct SinglePlayerView: View {
                         suitValuePlayer = Int.random(in: 1...4)
                         playTurn()
                     }
+                    // button that appears only during ties?
                     .buttonStyle(CustomButtonStyle())
                     .offset(x: -60.0, y: 0.0)
                 }
@@ -63,9 +72,13 @@ struct SinglePlayerView: View {
     func turnWinner() {
         if cardValueCPU > cardValuePlayer {
             pointsCPU += cardValueCPU
+            
         }
         else if cardValuePlayer > cardValueCPU {
             pointsPlayer += cardValuePlayer
+        }
+        else if cardValueCPU == cardValuePlayer {
+            tie = true
         }
     }
     
@@ -75,6 +88,7 @@ struct SinglePlayerView: View {
             cardValueCPU = 0
             suitValuePlayer = 0
             suitValueCPU = 0
+            tie = false
         }
         else {
             turnWinner()
