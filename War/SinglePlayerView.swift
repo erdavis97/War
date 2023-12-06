@@ -30,6 +30,7 @@ struct SinglePlayerView: View {
                     if flipped {
                         CardImage(name: "\(cardValueCPU) \(suitValueCPU)")
                             .offset(x: 0.0, y: -170.0)
+                    }
                         if tie {
                             HStack {
                                 CardImage(name: "gray_back")
@@ -37,7 +38,6 @@ struct SinglePlayerView: View {
                                 CardImage(name: "gray_back")
                             }
                         }
-                    }
                 }
                 HStack {
                     VStack {
@@ -46,15 +46,26 @@ struct SinglePlayerView: View {
                         CustomText1(text: "Player 1: \(pointsPlayer)")
                             .offset(x: -33.0, y: 0.0)
                     }
-                    Button("Flip") {
-                        flipped.toggle()
-                        cardValueCPU = Int.random(in: 2...14)
-                        cardValuePlayer = Int.random(in: 2...14)
-                        suitValueCPU = Int.random(in: 1...4)
-                        suitValuePlayer = Int.random(in: 1...4)
-                        playTurn()
+                    ZStack {
+                        Button("Flip") {
+                            flipped.toggle()
+                            cardValueCPU = Int.random(in: 2...14)
+                            cardValuePlayer = Int.random(in: 2...14)
+                            suitValueCPU = Int.random(in: 1...4)
+                            suitValuePlayer = Int.random(in: 1...4)
+                            playTurn()
+                        }
+                        if tie {
+                            Button("Tie") {
+                                flipped.toggle()
+                                cardValueCPU = Int.random(in: 2...14)
+                                cardValuePlayer = Int.random(in: 2...14)
+                                suitValueCPU = Int.random(in: 1...4)
+                                suitValuePlayer = Int.random(in: 1...4)
+                               turnWinner()
+                            }
+                        }
                     }
-                    // button that appears only during ties?
                        .buttonStyle(CustomButtonStyle())
                        .offset(x: -15.0, y: 0.0)
                     CustomText1(text: String(winner))
@@ -66,6 +77,13 @@ struct SinglePlayerView: View {
                     if flipped {
                         CardImage(name: "\(cardValuePlayer) \(suitValuePlayer)")
                             .offset(x: 0.0, y: 190.0)
+                    }
+                    if tie {
+                        HStack {
+                            CardImage(name: "blue_back")
+                            CardImage(name: "\(cardValuePlayer) \(suitValuePlayer)")
+                            CardImage(name: "blue_back")
+                        }
                     }
                 }
             }
