@@ -17,6 +17,9 @@ struct SinglePlayerView: View {
     @State private var cardValueCPU = 0
     @State private var suitValuePlayer = 0
     @State private var suitValueCPU = 0
+    @State private var preTiePointsCPU = 0
+    @State private var preTiePointsPlayer = 0
+
     var body: some View {
         ZStack {
             Image("Green Background")
@@ -33,9 +36,7 @@ struct SinglePlayerView: View {
                     }
                         if tie {
                             HStack {
-                                CardImage(name: "gray_back")
                                 CardImage(name: "\(cardValueCPU) \(suitValueCPU)")
-                                CardImage(name: "gray_back")
                             }
                         }
                 }
@@ -80,9 +81,7 @@ struct SinglePlayerView: View {
                     }
                     if tie {
                         HStack {
-                            CardImage(name: "blue_back")
                             CardImage(name: "\(cardValuePlayer) \(suitValuePlayer)")
-                            CardImage(name: "blue_back")
                         }
                     }
                 }
@@ -92,15 +91,19 @@ struct SinglePlayerView: View {
     // add gameplay for ties, add card flip animation, add ending
     func turnWinner() {
         if cardValueCPU > cardValuePlayer {
-            pointsCPU += cardValueCPU
+            pointsCPU += cardValuePlayer
+            pointsCPU += preTiePointsPlayer
             winner = ("CPU WINS")
         }
         else if cardValuePlayer > cardValueCPU {
-            pointsPlayer += cardValuePlayer
+            pointsPlayer += cardValueCPU
+            pointsPlayer += preTiePointsCPU
             winner = ("PLAYER WINS")
         }
         else if cardValueCPU == cardValuePlayer {
             tie = true
+            preTiePointsCPU = cardValueCPU
+            preTiePointsPlayer = cardValuePlayer
         }
     }
     
@@ -111,6 +114,7 @@ struct SinglePlayerView: View {
             suitValuePlayer = 0
             suitValueCPU = 0
             tie = false
+            winner = ""
         }
         else {
             turnWinner()
