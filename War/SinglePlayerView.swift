@@ -60,7 +60,12 @@ struct SinglePlayerView: View {
                                 flipped.toggle()
                                 setRandom()
                                 turnWinner()
-                                
+                                if cardValueCPU != cardValuePlayer {
+                                        if flipped == true {
+                                            tie.toggle()
+                                            flipped.toggle()
+                                    }
+                                }
                             }
                         }
                     }
@@ -109,9 +114,12 @@ struct SinglePlayerView: View {
         }
         else if cardValueCPU == cardValuePlayer {
             tie = true
-            preTiePointsCPU = cardValueCPU
-            preTiePointsPlayer = cardValuePlayer
+            if tie == true {
+                preTiePointsCPU = cardValueCPU
+                preTiePointsPlayer = cardValuePlayer
+            }
         }
+        
     }
     
     func playTurn() {
