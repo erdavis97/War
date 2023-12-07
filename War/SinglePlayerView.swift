@@ -19,7 +19,6 @@ struct SinglePlayerView: View {
     @State private var suitValueCPU = 0
     @State private var preTiePointsCPU = 0
     @State private var preTiePointsPlayer = 0
-
     var body: some View {
         ZStack {
             Image("Green Background")
@@ -35,8 +34,11 @@ struct SinglePlayerView: View {
                             .offset(x: 0.0, y: -170.0)
                     }
                         if tie {
-                            HStack {
+                            ZStack {
                                 CardImage(name: "\(cardValueCPU) \(suitValueCPU)")
+                                if flipped {
+                                    CardImage(name: "gray_back")
+                                }
                             }
                         }
                 }
@@ -50,20 +52,15 @@ struct SinglePlayerView: View {
                     ZStack {
                         Button("Flip") {
                             flipped.toggle()
-                            cardValueCPU = Int.random(in: 2...14)
-                            cardValuePlayer = Int.random(in: 2...14)
-                            suitValueCPU = Int.random(in: 1...4)
-                            suitValuePlayer = Int.random(in: 1...4)
+                            setRandom()
                             playTurn()
                         }
                         if tie {
                             Button("Tie") {
                                 flipped.toggle()
-                                cardValueCPU = Int.random(in: 2...14)
-                                cardValuePlayer = Int.random(in: 2...14)
-                                suitValueCPU = Int.random(in: 1...4)
-                                suitValuePlayer = Int.random(in: 1...4)
-                               turnWinner()
+                                setRandom()
+                                turnWinner()
+                                
                             }
                         }
                     }
@@ -80,15 +77,25 @@ struct SinglePlayerView: View {
                             .offset(x: 0.0, y: 190.0)
                     }
                     if tie {
-                        HStack {
+                        ZStack {
                             CardImage(name: "\(cardValuePlayer) \(suitValuePlayer)")
+                            if flipped {
+                                CardImage(name: "blue_back")
+                            }
                         }
                     }
                 }
             }
         }
     }
-    // add gameplay for ties, add card flip animation, add ending
+    
+    func setRandom() {
+        cardValueCPU = Int.random(in: 2...14)
+        cardValuePlayer = Int.random(in: 2...14)
+        suitValueCPU = Int.random(in: 1...4)
+        suitValuePlayer = Int.random(in: 1...4)
+    }
+   
     func turnWinner() {
         if cardValueCPU > cardValuePlayer {
             pointsCPU += cardValuePlayer
@@ -109,12 +116,12 @@ struct SinglePlayerView: View {
     
     func playTurn() {
         if flipped == false {
+            tie = false
+            winner = ""
             cardValuePlayer = 0
             cardValueCPU = 0
             suitValuePlayer = 0
             suitValueCPU = 0
-            tie = false
-            winner = ""
         }
         else {
             turnWinner()
