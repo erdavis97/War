@@ -64,6 +64,10 @@ struct SinglePlayerView: View {
                                         if flipped == true {
                                             tie.toggle()
                                             flipped.toggle()
+                                            if tie == false {
+                                                preTiePointsCPU = 0
+                                                preTiePointsPlayer = 0
+                                            }
                                     }
                                 }
                             }
@@ -130,6 +134,8 @@ struct SinglePlayerView: View {
             cardValueCPU = 0
             suitValuePlayer = 0
             suitValueCPU = 0
+            preTiePointsCPU = 0
+            preTiePointsPlayer = 0
         }
         else {
             turnWinner()
