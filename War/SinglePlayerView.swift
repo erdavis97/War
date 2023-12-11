@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+// glitch after tie that deals without flipping cards, will fix later
 struct SinglePlayerView: View {
     @State private var flipped = false
     @State private var tie = false
@@ -45,9 +45,16 @@ struct SinglePlayerView: View {
                 HStack {
                     VStack {
                         CustomText1(text: "CPU: \(pointsCPU)")
-                            .offset(x: -51.0, y: 0.0)
+                            .offset(x: -51.0, y: 7.5)
                         CustomText1(text: "Player 1: \(pointsPlayer)")
-                            .offset(x: -33.0, y: 0.0)
+                            .offset(x: -33.0, y: 17.5)
+                        Button("Reset") {
+                            resetCards()
+                            pointsCPU = 0
+                            pointsPlayer = 0
+                        }
+                        .background(Rectangle().frame(width: 65.0, height: 30.0) .foregroundColor(.yellow).border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: 2.5))
+                        .offset(x: -33.0, y: 75.0)
                     }
                     ZStack {
                         Button("Flip") {
@@ -140,6 +147,16 @@ struct SinglePlayerView: View {
         else {
             turnWinner()
         }
+    }
+    
+    func resetCards() {
+        flipped = false
+        cardValuePlayer = 0
+        cardValueCPU = 0
+        suitValuePlayer = 0
+        suitValueCPU = 0
+        preTiePointsCPU = 0
+        preTiePointsPlayer = 0
     }
 }
 
