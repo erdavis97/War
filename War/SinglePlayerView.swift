@@ -7,9 +7,12 @@
 
 import SwiftUI
 // glitch after tie that deals without flipping cards, will fix later
+// tmrw add ending then focus on glitch and cleaning up
 struct SinglePlayerView: View {
     @State private var flipped = false
     @State private var tie = false
+    @State private var gameOver = false
+    @State private var playerWon = false
     @State private var winner = ""
     @State private var pointsPlayer = 0
     @State private var pointsCPU = 0
@@ -49,9 +52,7 @@ struct SinglePlayerView: View {
                         CustomText1(text: "Player 1: \(pointsPlayer)")
                             .offset(x: -33.0, y: 17.5)
                         Button("Reset") {
-                            resetCards()
-                            pointsCPU = 0
-                            pointsPlayer = 0
+                            restart()
                         }
                         .background(Rectangle().frame(width: 65.0, height: 30.0) .foregroundColor(.yellow).border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: 2.5))
                         .offset(x: -33.0, y: 75.0)
@@ -61,19 +62,20 @@ struct SinglePlayerView: View {
                             flipped.toggle()
                             setRandom()
                             playTurn()
+                            checkWinner()
                         }
                         if tie {
                             Button("Tie") {
                                 flipped.toggle()
                                 setRandom()
                                 turnWinner()
+                                checkWinner()
                                 if cardValueCPU != cardValuePlayer {
                                         if flipped == true {
                                             tie.toggle()
                                             flipped.toggle()
                                             if tie == false {
-                                                preTiePointsCPU = 0
-                                                preTiePointsPlayer = 0
+                                                resetCards()
                                             }
                                     }
                                 }
@@ -103,6 +105,15 @@ struct SinglePlayerView: View {
                 }
             }
         }
+        .alert(isPresented: $gameOver, content: {
+            Alert(title: Text("You win!"), dismissButton:
+                    .destructive(Text("Play again"), action: {
+                        withAnimation(Animation.default) {
+                            restart()
+                            gameOver = false
+                        }
+                    }))
+                 })
     }
     
     func setRandom() {
@@ -151,13 +162,26 @@ struct SinglePlayerView: View {
     
     func resetCards() {
         flipped = false
-        cardValuePlayer = 0
-        cardValueCPU = 0
-        suitValuePlayer = 0
-        suitValueCPU = 0
-        preTiePointsCPU = 0
-        preTiePointsPlayer = 0
+        playTurn()
     }
+    
+    func restart() {
+        resetCards()
+        pointsCPU = 0
+        pointsPlayer = 0
+    }
+    
+    func checkWinner() {
+        if pointsCPU >= 100 {
+            gameOver = true
+            playerWon = false
+        }
+        else if pointsPlayer >= 100 {
+            gameOver = true
+            playerWon = true
+        }
+    }
+    
 }
 
 struct SinglePlayerView_Previews: PreviewProvider {
