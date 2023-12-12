@@ -7,7 +7,7 @@
 
 import SwiftUI
 // glitch after tie that deals without flipping cards, will fix later
-// tmrw add ending then focus on glitch and cleaning up
+// add ending, tranfer data across views then focus on glitch and cleaning up
 struct SinglePlayerView: View {
     @State private var flipped = false
     @State private var tie = false
@@ -106,8 +106,8 @@ struct SinglePlayerView: View {
             }
         }
         .alert(isPresented: $gameOver, content: {
-            Alert(title: Text("You win!"), dismissButton:
-                    .destructive(Text("Play again"), action: {
+            Alert(title: Text("\(winner)"), dismissButton:
+                    .destructive(Text("Restart"), action: {
                         withAnimation(Animation.default) {
                             restart()
                             gameOver = false
@@ -116,23 +116,32 @@ struct SinglePlayerView: View {
                  })
     }
     
+    func whoWon() {
+        if playerWon {
+            winner = ("PLAYER WINS")
+        }
+        else {
+            winner = ("CPU WINS")
+        }
+    }
+    
     func setRandom() {
         cardValueCPU = Int.random(in: 2...14)
         cardValuePlayer = Int.random(in: 2...14)
         suitValueCPU = Int.random(in: 1...4)
         suitValuePlayer = Int.random(in: 1...4)
     }
-   
+    
     func turnWinner() {
+        whoWon()
         if cardValueCPU > cardValuePlayer {
             pointsCPU += cardValuePlayer
             pointsCPU += preTiePointsPlayer
-            winner = ("CPU WINS")
         }
         else if cardValuePlayer > cardValueCPU {
             pointsPlayer += cardValueCPU
             pointsPlayer += preTiePointsCPU
-            winner = ("PLAYER WINS")
+            playerWon = true
         }
         else if cardValueCPU == cardValuePlayer {
             tie = true
@@ -174,15 +183,15 @@ struct SinglePlayerView: View {
     func checkWinner() {
         if pointsCPU >= 100 {
             gameOver = true
-            playerWon = false
+            winner = ("CPU WINS")
         }
         else if pointsPlayer >= 100 {
             gameOver = true
-            playerWon = true
+            winner = ("PLAYER WINS")
         }
     }
-    
 }
+
 
 struct SinglePlayerView_Previews: PreviewProvider {
     static var previews: some View {
@@ -190,12 +199,14 @@ struct SinglePlayerView_Previews: PreviewProvider {
     }
 }
 
+
 struct CustomText1: View {
     let text: String
     var body: some View {
         Text(text).font(Font.custom("", size: 22)).fontWeight(.bold).foregroundColor(Color.white)
     }
 }
+
 
 struct CardImage: View {
     let name: String
@@ -206,6 +217,7 @@ struct CardImage: View {
             .frame(width: 100.0, height: 180.0)
     }
 }
+
 
 struct CustomButtonStyle: ButtonStyle {
     func makeBody (configuration: Configuration) -> some View {
