@@ -89,10 +89,10 @@ struct SinglePlayerView: View {
                 }
                 ZStack {
                     CardImage(name: "blue_back")
-                        .offset(x: 0.0, y: 190.0)
+                        .offset(x: 0.0, y: 170.0)
                     if flipped {
                         CardImage(name: "\(cardValuePlayer) \(suitValuePlayer)")
-                            .offset(x: 0.0, y: 190.0)
+                            .offset(x: 0.0, y: 170.0)
                     }
                     if tie {
                         ZStack {
