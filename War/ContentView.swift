@@ -24,7 +24,7 @@ struct ContentView: View {
                 .border(/*@START_MENU_TOKEN@*/Color.red/*@END_MENU_TOKEN@*/, width: 1)
                 .padding(35)
             NavigationLink(destination: {
-                    SinglePlayerView()
+                SinglePlayerView(name: name)
                 }, label: {
                     Text("Start Game")
                         .background(Rectangle().frame(width: 130.0, height: 40.0) .foregroundColor(.yellow).border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: 2.5))

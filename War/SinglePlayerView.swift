@@ -7,7 +7,7 @@
 
 import SwiftUI
 // glitch after tie that deals without flipping cards, will fix later
-// add ending, tranfer data across views then focus on glitch and cleaning up
+// transfer data across views then focus on glitch and cleaning up
 struct SinglePlayerView: View {
     @State private var flipped = false
     @State private var tie = false
@@ -22,6 +22,7 @@ struct SinglePlayerView: View {
     @State private var suitValueCPU = 0
     @State private var preTiePointsCPU = 0
     @State private var preTiePointsPlayer = 0
+    let name : String
     var body: some View {
         ZStack {
             Image("Green Background")
@@ -116,15 +117,6 @@ struct SinglePlayerView: View {
                  })
     }
     
-    func whoWon() {
-        if playerWon {
-            winner = ("PLAYER WINS")
-        }
-        else {
-            winner = ("CPU WINS")
-        }
-    }
-    
     func setRandom() {
         cardValueCPU = Int.random(in: 2...14)
         cardValuePlayer = Int.random(in: 2...14)
@@ -133,15 +125,16 @@ struct SinglePlayerView: View {
     }
     
     func turnWinner() {
-        whoWon()
+        
         if cardValueCPU > cardValuePlayer {
             pointsCPU += cardValuePlayer
             pointsCPU += preTiePointsPlayer
+            winner = ("CPU WINS")
         }
         else if cardValuePlayer > cardValueCPU {
             pointsPlayer += cardValueCPU
             pointsPlayer += preTiePointsCPU
-            playerWon = true
+            winner = ("\(name) WINS")
         }
         else if cardValueCPU == cardValuePlayer {
             tie = true
@@ -195,7 +188,7 @@ struct SinglePlayerView: View {
 
 struct SinglePlayerView_Previews: PreviewProvider {
     static var previews: some View {
-        SinglePlayerView()
+        SinglePlayerView(name: "")
     }
 }
 
