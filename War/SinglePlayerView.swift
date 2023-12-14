@@ -83,19 +83,19 @@ struct SinglePlayerView: View {
                                 setRandom()
                                 turnWinner()
                                 checkWinner()
-                                if cardValueCPU != cardValuePlayer {
-                                    preTiePointsCPU = 0
-                                    preTiePointsPlayer = 0
-                                    if flipped {
+                                if tie {
+                                    flipped = false
+                                    if flipped == false {
+                                        if cardValueCPU != cardValuePlayer {
                                             tie.toggle()
-                                            flipped.toggle()
                                             if tie == false {
                                                 resetCards()
                                             }
+                                        }
+                                        else {
+                                            stalemate = true
+                                        }
                                     }
-                                }
-                                else {
-                                    stalemate = true
                                 }
                             }
                         }
@@ -136,57 +136,11 @@ struct SinglePlayerView: View {
     }
     
     func setRandom() {
-        cardValueCPU = 8
-        cardValuePlayer = Int.random(in: 2...14)
+        cardValueCPU = 2
+        cardValuePlayer = Int.random(in: 2...7)
         suitValueCPU = Int.random(in: 1...4)
         suitValuePlayer = Int.random(in: 1...4)
-    }
-    
-    func turnWinner() {
-        if cardValueCPU > cardValuePlayer {
-            pointsCPU += cardValuePlayer
-            pointsCPU += preTiePointsPlayer
-            winner = ("CPU WINS")
-        }
-        else if cardValuePlayer > cardValueCPU {
-            pointsPlayer += cardValueCPU
-            pointsPlayer += preTiePointsCPU
-            winner = ("\(name) WINS")
-        }
-        else if cardValueCPU == cardValuePlayer {
-            tie = true
-            if tie == true {
-                preTiePointsCPU = cardValueCPU
-                preTiePointsPlayer = cardValuePlayer
-            }
-        }
-    }
-    
-    func playTurn() {
-        if flipped == false {
-            tie = false
-            winner = ""
-            cardValuePlayer = 0
-            cardValueCPU = 0
-            suitValuePlayer = 0
-            suitValueCPU = 0
-            preTiePointsCPU = 0
-            preTiePointsPlayer = 0
-        }
-        else {
-            turnWinner()
-        }
-    }
-    
-    func resetCards() {
-        flipped = false
-        playTurn()
-    }
-    
-    func restart() {
-        resetCards()
-        pointsCPU = 0
-        pointsPlayer = 0
+        //Int.random(in: 2...14)
     }
     
     func checkWinner() {
@@ -203,6 +157,56 @@ struct SinglePlayerView: View {
             winner = ("\(name) WINS")
         }
     }
+    
+    func turnWinner() {
+        if cardValueCPU > cardValuePlayer {
+            pointsCPU += cardValuePlayer
+            pointsCPU += preTiePointsPlayer
+            winner = ("CPU WINS")
+        }
+        else if cardValuePlayer > cardValueCPU {
+            pointsPlayer += cardValueCPU
+            pointsPlayer += preTiePointsCPU
+            winner = ("\(name) WINS")
+        }
+        else if cardValueCPU == cardValuePlayer {
+            tie = true
+            if tie == true {
+                checkWinner()
+                preTiePointsCPU = cardValueCPU
+                preTiePointsPlayer = cardValuePlayer
+            }
+        }
+    }
+    
+    func resetCards() {
+        cardValuePlayer = 0
+        cardValueCPU = 0
+        suitValuePlayer = 0
+        suitValueCPU = 0
+        preTiePointsCPU = 0
+        preTiePointsPlayer = 0
+    }
+    
+    func playTurn() {
+        if flipped == false {
+            tie = false
+            winner = ""
+            resetCards()
+        }
+        else {
+            turnWinner()
+        }
+    }
+    
+    func restart() {
+        flipped = false
+        resetCards()
+        pointsCPU = 0
+        pointsPlayer = 0
+    }
+    
+   
     
     
 }
