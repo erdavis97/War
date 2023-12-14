@@ -52,6 +52,18 @@ struct SinglePlayerView: View {
                             .offset(x: -51.0, y: 7.5)
                         CustomText1(text: "\(name): \(pointsPlayer)")
                             .offset(x: -40.0, y: 17.5)
+                        
+                        //this is temporary:
+                        
+                        CustomText1(text: "\(preTiePointsCPU)")
+                            .offset(x: -40.0, y: 17.5)
+                        CustomText1(text: "\(preTiePointsPlayer)")
+                            .offset(x: -40.0, y: 17.5)
+                        CustomText1(text: "\(flipped)")
+                            .offset(x: -40.0, y: 17.5)
+                        CustomText1(text: "\(tie)")
+                            .offset(x: -40.0, y: 17.5)
+                        
                         Button("Reset") {
                             restart()
                         }
@@ -72,7 +84,9 @@ struct SinglePlayerView: View {
                                 turnWinner()
                                 checkWinner()
                                 if cardValueCPU != cardValuePlayer {
-                                        if flipped == true {
+                                    preTiePointsCPU = 0
+                                    preTiePointsPlayer = 0
+                                    if flipped {
                                             tie.toggle()
                                             flipped.toggle()
                                             if tie == false {
@@ -122,7 +136,7 @@ struct SinglePlayerView: View {
     }
     
     func setRandom() {
-        cardValueCPU = Int.random(in: 2...14)
+        cardValueCPU = 8
         cardValuePlayer = Int.random(in: 2...14)
         suitValueCPU = Int.random(in: 1...4)
         suitValuePlayer = Int.random(in: 1...4)
