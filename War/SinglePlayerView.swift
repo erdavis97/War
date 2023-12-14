@@ -12,7 +12,7 @@ struct SinglePlayerView: View {
     @State private var flipped = false
     @State private var tie = false
     @State private var gameOver = false
-    @State private var playerWon = false
+    @State private var stalemate = false
     @State private var winner = ""
     @State private var pointsPlayer = 0
     @State private var pointsCPU = 0
@@ -50,8 +50,8 @@ struct SinglePlayerView: View {
                     VStack {
                         CustomText1(text: "CPU: \(pointsCPU)")
                             .offset(x: -51.0, y: 7.5)
-                        CustomText1(text: "Player 1: \(pointsPlayer)")
-                            .offset(x: -33.0, y: 17.5)
+                        CustomText1(text: "\(name): \(pointsPlayer)")
+                            .offset(x: -40.0, y: 17.5)
                         Button("Reset") {
                             restart()
                         }
@@ -80,11 +80,14 @@ struct SinglePlayerView: View {
                                             }
                                     }
                                 }
+                                else {
+                                    stalemate = true
+                                }
                             }
                         }
                     }
                        .buttonStyle(CustomButtonStyle())
-                       .offset(x: -15.0, y: 0.0)
+                       .offset(x: 0, y: 0.0)
                     CustomText1(text: String(winner))
                         .frame(width: 86, height: 55)
                 }
@@ -112,6 +115,7 @@ struct SinglePlayerView: View {
                         withAnimation(Animation.default) {
                             restart()
                             gameOver = false
+                            stalemate = false
                         }
                     }))
                  })
@@ -125,7 +129,6 @@ struct SinglePlayerView: View {
     }
     
     func turnWinner() {
-        
         if cardValueCPU > cardValuePlayer {
             pointsCPU += cardValuePlayer
             pointsCPU += preTiePointsPlayer
@@ -143,7 +146,6 @@ struct SinglePlayerView: View {
                 preTiePointsPlayer = cardValuePlayer
             }
         }
-        
     }
     
     func playTurn() {
@@ -174,15 +176,21 @@ struct SinglePlayerView: View {
     }
     
     func checkWinner() {
-        if pointsCPU >= 100 {
+        if stalemate == true {
+            gameOver = true
+            winner = ("STALEMATE: EVERYONE LOSES")
+        }
+        else if pointsCPU >= 100 {
             gameOver = true
             winner = ("CPU WINS")
         }
         else if pointsPlayer >= 100 {
             gameOver = true
-            winner = ("PLAYER WINS")
+            winner = ("\(name) WINS")
         }
     }
+    
+    
 }
 
 
