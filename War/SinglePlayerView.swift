@@ -21,7 +21,7 @@ struct SinglePlayerView: View {
     @State private var suitValueCPU = 0
     @State private var preTiePointsCPU = 0
     @State private var preTiePointsPlayer = 0
-    let name : String
+    let namePlayer : String
     var body: some View {
         ZStack {
             Image("Green Background")
@@ -49,22 +49,8 @@ struct SinglePlayerView: View {
                     VStack {
                         CustomText1(text: "CPU: \(pointsCPU)")
                             .offset(x: -51.0, y: 7.5)
-                        CustomText1(text: "\(name): \(pointsPlayer)")
+                        CustomText1(text: "\(namePlayer): \(pointsPlayer)")
                             .offset(x: -40.0, y: 17.5)
-                        
-                        //this is temporary:
-                        
-                        CustomText1(text: "\(preTiePointsCPU)")
-                            .offset(x: -40.0, y: 17.5)
-                        CustomText1(text: "\(preTiePointsPlayer)")
-                            .offset(x: -40.0, y: 17.5)
-                        CustomText1(text: "\(flipped)")
-                            .offset(x: -40.0, y: 17.5)
-                        CustomText1(text: "\(tie)")
-                            .offset(x: -40.0, y: 17.5)
-                        CustomText1(text: "\(test)")
-                            .offset(x: -40.0, y: 17.5)
-                        
                         Button("Reset") {
                             restart()
                         }
@@ -86,12 +72,16 @@ struct SinglePlayerView: View {
                                     test = true
                                     preTiePointsCPU = 0
                                     preTiePointsCPU = 0
+                                    resetTie()
+                                    if cardValueCPU == cardValuePlayer {
+                                        stalemate = true
+                                    }
                                 }
                                 else {
                                     resetTie()
                                     flipped = false
                                     playTurn()
-                                    
+
                                 }
                             }
                         }
@@ -137,20 +127,20 @@ struct SinglePlayerView: View {
             gameOver = true
             winner = ("STALEMATE: EVERYONE LOSES")
         }
-        else if pointsCPU >= 100 {
+        else if pointsCPU >= 25 {
             gameOver = true
             winner = ("CPU WINS")
         }
-        else if pointsPlayer >= 100 {
+        else if pointsPlayer >= 25 {
             gameOver = true
-            winner = ("\(name) WINS")
+            winner = ("\(namePlayer) WINS")
         }
     }
     
     func setRandom() {
         checkWinner()
-        cardValueCPU = 2
-        cardValuePlayer = Int.random(in: 2...7)
+        cardValueCPU = Int.random(in: 2...14)
+        cardValuePlayer = Int.random(in: 2...14)
         suitValueCPU = Int.random(in: 1...4)
         suitValuePlayer = Int.random(in: 1...4)
         //Int.random(in: 2...14)
@@ -165,7 +155,7 @@ struct SinglePlayerView: View {
         else if cardValuePlayer > cardValueCPU {
             pointsPlayer += cardValueCPU
             pointsPlayer += preTiePointsCPU
-            winner = ("\(name) WINS")
+            winner = ("\(namePlayer) WINS")
         }
         else if cardValueCPU == cardValuePlayer {
             tie = true
@@ -186,14 +176,13 @@ struct SinglePlayerView: View {
                 pointsPlayer -= cardValueCPU
             }
         }
-
     }
     
     func resetCards() {
         cardValuePlayer = 0
         cardValueCPU = 0
-        suitValuePlayer = 0
-        suitValueCPU = 0
+        suitValuePlayer = 6
+        suitValueCPU = 5
         preTiePointsCPU = 0
         preTiePointsPlayer = 0
     }
@@ -227,7 +216,7 @@ struct SinglePlayerView: View {
 
 struct SinglePlayerView_Previews: PreviewProvider {
     static var previews: some View {
-        SinglePlayerView(name: "")
+        SinglePlayerView(namePlayer: "")
     }
 }
 
