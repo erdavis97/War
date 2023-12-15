@@ -6,13 +6,12 @@
 //
 
 import SwiftUI
-// glitch after tie that deals without flipping cards, will fix later
-// transfer data across views then focus on glitch and cleaning up
 struct SinglePlayerView: View {
     @State private var flipped = false
     @State private var tie = false
     @State private var gameOver = false
     @State private var stalemate = false
+    @State private var test = false
     @State private var winner = ""
     @State private var pointsPlayer = 0
     @State private var pointsCPU = 0
@@ -63,6 +62,8 @@ struct SinglePlayerView: View {
                             .offset(x: -40.0, y: 17.5)
                         CustomText1(text: "\(tie)")
                             .offset(x: -40.0, y: 17.5)
+                        CustomText1(text: "\(test)")
+                            .offset(x: -40.0, y: 17.5)
                         
                         Button("Reset") {
                             restart()
@@ -75,27 +76,22 @@ struct SinglePlayerView: View {
                             flipped.toggle()
                             setRandom()
                             playTurn()
-                            checkWinner()
                         }
                         if tie {
                             Button("Tie") {
                                 flipped.toggle()
                                 setRandom()
                                 turnWinner()
-                                checkWinner()
-                                if tie {
+                                if flipped == false {
+                                    test = true
+                                    preTiePointsCPU = 0
+                                    preTiePointsCPU = 0
+                                }
+                                else {
+                                    resetTie()
                                     flipped = false
-                                    if flipped == false {
-                                        if cardValueCPU != cardValuePlayer {
-                                            tie.toggle()
-                                            if tie == false {
-                                                resetCards()
-                                            }
-                                        }
-                                        else {
-                                            stalemate = true
-                                        }
-                                    }
+                                    playTurn()
+                                    
                                 }
                             }
                         }
@@ -135,13 +131,6 @@ struct SinglePlayerView: View {
                  })
     }
     
-    func setRandom() {
-        cardValueCPU = 2
-        cardValuePlayer = Int.random(in: 2...7)
-        suitValueCPU = Int.random(in: 1...4)
-        suitValuePlayer = Int.random(in: 1...4)
-        //Int.random(in: 2...14)
-    }
     
     func checkWinner() {
         if stalemate == true {
@@ -156,6 +145,15 @@ struct SinglePlayerView: View {
             gameOver = true
             winner = ("\(name) WINS")
         }
+    }
+    
+    func setRandom() {
+        checkWinner()
+        cardValueCPU = 2
+        cardValuePlayer = Int.random(in: 2...7)
+        suitValueCPU = Int.random(in: 1...4)
+        suitValuePlayer = Int.random(in: 1...4)
+        //Int.random(in: 2...14)
     }
     
     func turnWinner() {
@@ -179,6 +177,18 @@ struct SinglePlayerView: View {
         }
     }
     
+    func resetTie() {
+         if test == true {
+            if cardValueCPU > cardValuePlayer {
+                pointsCPU -= cardValuePlayer
+            }
+            else if cardValuePlayer > cardValueCPU {
+                pointsPlayer -= cardValueCPU
+            }
+        }
+
+    }
+    
     func resetCards() {
         cardValuePlayer = 0
         cardValueCPU = 0
@@ -190,9 +200,12 @@ struct SinglePlayerView: View {
     
     func playTurn() {
         if flipped == false {
-            tie = false
             winner = ""
             resetCards()
+            tie = false
+            if tie == false {
+                test = false
+            }
         }
         else {
             turnWinner()
