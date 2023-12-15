@@ -60,8 +60,8 @@ struct SinglePlayerView: View {
                     ZStack {
                         Button("Flip") {
                             flipped.toggle()
-                            setRandom()
-                            playTurn()
+                                setRandom()
+                                playTurn()
                         }
                         if tie {
                             Button("Tie") {
@@ -124,14 +124,17 @@ struct SinglePlayerView: View {
         if stalemate == true {
             winner = ("STALEMATE: EVERYONE LOSES")
             gameOver = true
+            test = true
         }
-        else if pointsCPU >= 50 {
+        else if pointsCPU >= 100 {
             winner = ("CPU WINS")
             gameOver = true
+            test = true
         }
-        else if pointsPlayer >= 50 {
+        else if pointsPlayer >= 25 {
             gameOver = true
             winner = ("\(name) WINS")
+            test = true
         }
     }
     
@@ -145,6 +148,7 @@ struct SinglePlayerView: View {
     }
     
     func turnWinner() {
+        checkWinner()
         if cardValueCPU > cardValuePlayer {
             pointsCPU += cardValuePlayer
             pointsCPU += preTiePointsPlayer
@@ -173,6 +177,9 @@ struct SinglePlayerView: View {
             else if cardValuePlayer > cardValueCPU {
                 pointsPlayer -= (cardValueCPU + preTiePointsCPU)
             }
+             else if cardValueCPU == cardValuePlayer {
+                 stalemate = true
+             }
         }
     }
     
@@ -187,7 +194,9 @@ struct SinglePlayerView: View {
     
     func playTurn() {
         if flipped == false {
-            winner = ""
+            if test == false {
+                winner = ""
+            }
             resetCards()
             tie = false
             if tie == false {
