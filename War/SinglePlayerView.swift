@@ -123,7 +123,6 @@ struct SinglePlayerView: View {
     func checkWinner() {
         if stalemate == true {
             winner = ("STALEMATE: EVERYONE LOSES")
-            gameOver = true
             test = true
         }
         else if pointsCPU >= 100 {
@@ -131,7 +130,7 @@ struct SinglePlayerView: View {
             gameOver = true
             test = true
         }
-        else if pointsPlayer >= 25 {
+        else if pointsPlayer >= 100 {
             gameOver = true
             winner = ("\(name) WINS")
             test = true
@@ -178,7 +177,10 @@ struct SinglePlayerView: View {
                 pointsPlayer -= (cardValueCPU + preTiePointsCPU)
             }
              else if cardValueCPU == cardValuePlayer {
-                 stalemate = true
+                  if tie {
+                     stalemate = true
+                     gameOver = true
+                  }
              }
         }
     }
